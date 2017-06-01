@@ -72,9 +72,9 @@ using namespace std;
 extern "C"
 {
     void yyerror(const char *s);
-    int yylex(void);
+    extern int yylex(void);
+    extern int line_no;
 }
-
 
 #line 80 "yacc.tab.c" /* yacc.c:339  */
 
@@ -533,14 +533,14 @@ static const yytype_uint16 yyrline[] =
      148,   152,   156,   158,   160,   164,   166,   168,   170,   172,
      174,   176,   180,   184,   188,   190,   194,   198,   200,   204,
      206,   209,   211,   215,   219,   221,   223,   225,   226,   229,
-     233,   237,   241,   245,   247,   250,   252,   256,   258,   262,
-     266,   270,   274,   278,   280,   282,   284,   288,   290,   292,
-     294,   296,   298,   300,   302,   304,   308,   310,   312,   316,
-     318,   320,   322,   324,   328,   332,   334,   337,   341,   345,
-     349,   351,   355,   359,   361,   365,   367,   371,   375,   377,
-     381,   383,   385,   387,   389,   391,   393,   397,   399,   401,
-     403,   407,   409,   411,   413,   415,   419,   421,   423,   425,
-     427,   429,   431,   433,   435,   437,   441,   443
+     233,   238,   242,   246,   248,   251,   253,   257,   259,   263,
+     267,   271,   275,   279,   281,   283,   285,   289,   291,   293,
+     295,   297,   299,   301,   303,   305,   309,   311,   313,   317,
+     319,   321,   323,   325,   329,   333,   335,   338,   342,   346,
+     350,   352,   356,   360,   362,   366,   368,   372,   376,   378,
+     382,   384,   386,   388,   390,   392,   394,   398,   400,   402,
+     404,   408,   410,   412,   414,   416,   420,   422,   424,   426,
+     428,   430,   432,   434,   436,   438,   442,   444
 };
 #endif
 
@@ -1568,7 +1568,7 @@ yyreduce:
 
   case 11:
 #line 126 "yacc.y" /* yacc.c:1646  */
-    {}
+    { cout<<"CONST"<<(yyvsp[-3].sValue)<<" "<<(yyvsp[-1].iValue)<<endl;}
 #line 1573 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1580,7 +1580,7 @@ yyreduce:
 
   case 13:
 #line 132 "yacc.y" /* yacc.c:1646  */
-    {}
+    {cout<<"REAL"<<(yyvsp[0].rValue)<<endl;(yyval.iValue)=2;}
 #line 1585 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1796,474 +1796,475 @@ yyreduce:
 
   case 50:
 #line 234 "yacc.y" /* yacc.c:1646  */
-    {}
-#line 1801 "yacc.tab.c" /* yacc.c:1646  */
+    {
+    }
+#line 1802 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 238 "yacc.y" /* yacc.c:1646  */
+#line 239 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1807 "yacc.tab.c" /* yacc.c:1646  */
+#line 1808 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 242 "yacc.y" /* yacc.c:1646  */
+#line 243 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1813 "yacc.tab.c" /* yacc.c:1646  */
+#line 1814 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 246 "yacc.y" /* yacc.c:1646  */
+#line 247 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1819 "yacc.tab.c" /* yacc.c:1646  */
+#line 1820 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 247 "yacc.y" /* yacc.c:1646  */
+#line 248 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1825 "yacc.tab.c" /* yacc.c:1646  */
+#line 1826 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 251 "yacc.y" /* yacc.c:1646  */
+#line 252 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1831 "yacc.tab.c" /* yacc.c:1646  */
+#line 1832 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 253 "yacc.y" /* yacc.c:1646  */
+#line 254 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1837 "yacc.tab.c" /* yacc.c:1646  */
+#line 1838 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 257 "yacc.y" /* yacc.c:1646  */
+#line 258 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1843 "yacc.tab.c" /* yacc.c:1646  */
+#line 1844 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 259 "yacc.y" /* yacc.c:1646  */
+#line 260 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1849 "yacc.tab.c" /* yacc.c:1646  */
+#line 1850 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 263 "yacc.y" /* yacc.c:1646  */
+#line 264 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1855 "yacc.tab.c" /* yacc.c:1646  */
+#line 1856 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 267 "yacc.y" /* yacc.c:1646  */
+#line 268 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1861 "yacc.tab.c" /* yacc.c:1646  */
+#line 1862 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 271 "yacc.y" /* yacc.c:1646  */
+#line 272 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1867 "yacc.tab.c" /* yacc.c:1646  */
+#line 1868 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 275 "yacc.y" /* yacc.c:1646  */
+#line 276 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1873 "yacc.tab.c" /* yacc.c:1646  */
+#line 1874 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 279 "yacc.y" /* yacc.c:1646  */
+#line 280 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1879 "yacc.tab.c" /* yacc.c:1646  */
+#line 1880 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 280 "yacc.y" /* yacc.c:1646  */
+#line 281 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1885 "yacc.tab.c" /* yacc.c:1646  */
+#line 1886 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 283 "yacc.y" /* yacc.c:1646  */
+#line 284 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1891 "yacc.tab.c" /* yacc.c:1646  */
+#line 1892 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 285 "yacc.y" /* yacc.c:1646  */
+#line 286 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1897 "yacc.tab.c" /* yacc.c:1646  */
+#line 1898 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 289 "yacc.y" /* yacc.c:1646  */
+#line 290 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1903 "yacc.tab.c" /* yacc.c:1646  */
+#line 1904 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 291 "yacc.y" /* yacc.c:1646  */
+#line 292 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1909 "yacc.tab.c" /* yacc.c:1646  */
+#line 1910 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 293 "yacc.y" /* yacc.c:1646  */
+#line 294 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1915 "yacc.tab.c" /* yacc.c:1646  */
+#line 1916 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 295 "yacc.y" /* yacc.c:1646  */
+#line 296 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1921 "yacc.tab.c" /* yacc.c:1646  */
+#line 1922 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 297 "yacc.y" /* yacc.c:1646  */
+#line 298 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1927 "yacc.tab.c" /* yacc.c:1646  */
+#line 1928 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 299 "yacc.y" /* yacc.c:1646  */
+#line 300 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1933 "yacc.tab.c" /* yacc.c:1646  */
+#line 1934 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 301 "yacc.y" /* yacc.c:1646  */
+#line 302 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1939 "yacc.tab.c" /* yacc.c:1646  */
+#line 1940 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 303 "yacc.y" /* yacc.c:1646  */
+#line 304 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1945 "yacc.tab.c" /* yacc.c:1646  */
+#line 1946 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 305 "yacc.y" /* yacc.c:1646  */
+#line 306 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1951 "yacc.tab.c" /* yacc.c:1646  */
+#line 1952 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 309 "yacc.y" /* yacc.c:1646  */
+#line 310 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1957 "yacc.tab.c" /* yacc.c:1646  */
+#line 1958 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 311 "yacc.y" /* yacc.c:1646  */
+#line 312 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1963 "yacc.tab.c" /* yacc.c:1646  */
+#line 1964 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 313 "yacc.y" /* yacc.c:1646  */
+#line 314 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1969 "yacc.tab.c" /* yacc.c:1646  */
+#line 1970 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 317 "yacc.y" /* yacc.c:1646  */
+#line 318 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1975 "yacc.tab.c" /* yacc.c:1646  */
+#line 1976 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 319 "yacc.y" /* yacc.c:1646  */
+#line 320 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1981 "yacc.tab.c" /* yacc.c:1646  */
+#line 1982 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 321 "yacc.y" /* yacc.c:1646  */
+#line 322 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1987 "yacc.tab.c" /* yacc.c:1646  */
+#line 1988 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 323 "yacc.y" /* yacc.c:1646  */
+#line 324 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1993 "yacc.tab.c" /* yacc.c:1646  */
+#line 1994 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 325 "yacc.y" /* yacc.c:1646  */
+#line 326 "yacc.y" /* yacc.c:1646  */
     {}
-#line 1999 "yacc.tab.c" /* yacc.c:1646  */
+#line 2000 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 84:
-#line 329 "yacc.y" /* yacc.c:1646  */
+#line 330 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2005 "yacc.tab.c" /* yacc.c:1646  */
+#line 2006 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 85:
-#line 333 "yacc.y" /* yacc.c:1646  */
+#line 334 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2011 "yacc.tab.c" /* yacc.c:1646  */
+#line 2012 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 334 "yacc.y" /* yacc.c:1646  */
+#line 335 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2017 "yacc.tab.c" /* yacc.c:1646  */
+#line 2018 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 87:
-#line 338 "yacc.y" /* yacc.c:1646  */
+#line 339 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2023 "yacc.tab.c" /* yacc.c:1646  */
+#line 2024 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 88:
-#line 342 "yacc.y" /* yacc.c:1646  */
+#line 343 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2029 "yacc.tab.c" /* yacc.c:1646  */
+#line 2030 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 89:
-#line 346 "yacc.y" /* yacc.c:1646  */
+#line 347 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2035 "yacc.tab.c" /* yacc.c:1646  */
+#line 2036 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 350 "yacc.y" /* yacc.c:1646  */
+#line 351 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2041 "yacc.tab.c" /* yacc.c:1646  */
+#line 2042 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 91:
-#line 352 "yacc.y" /* yacc.c:1646  */
+#line 353 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2047 "yacc.tab.c" /* yacc.c:1646  */
+#line 2048 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 92:
-#line 356 "yacc.y" /* yacc.c:1646  */
+#line 357 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2053 "yacc.tab.c" /* yacc.c:1646  */
+#line 2054 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 93:
-#line 360 "yacc.y" /* yacc.c:1646  */
+#line 361 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2059 "yacc.tab.c" /* yacc.c:1646  */
+#line 2060 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 362 "yacc.y" /* yacc.c:1646  */
+#line 363 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2065 "yacc.tab.c" /* yacc.c:1646  */
+#line 2066 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 95:
-#line 366 "yacc.y" /* yacc.c:1646  */
+#line 367 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2071 "yacc.tab.c" /* yacc.c:1646  */
+#line 2072 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 368 "yacc.y" /* yacc.c:1646  */
+#line 369 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2077 "yacc.tab.c" /* yacc.c:1646  */
+#line 2078 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 97:
-#line 372 "yacc.y" /* yacc.c:1646  */
+#line 373 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2083 "yacc.tab.c" /* yacc.c:1646  */
+#line 2084 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 98:
-#line 376 "yacc.y" /* yacc.c:1646  */
+#line 377 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2089 "yacc.tab.c" /* yacc.c:1646  */
+#line 2090 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 99:
-#line 378 "yacc.y" /* yacc.c:1646  */
+#line 379 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2095 "yacc.tab.c" /* yacc.c:1646  */
+#line 2096 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 382 "yacc.y" /* yacc.c:1646  */
+#line 383 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2101 "yacc.tab.c" /* yacc.c:1646  */
+#line 2102 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 101:
-#line 384 "yacc.y" /* yacc.c:1646  */
+#line 385 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2107 "yacc.tab.c" /* yacc.c:1646  */
+#line 2108 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 102:
-#line 386 "yacc.y" /* yacc.c:1646  */
+#line 387 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2113 "yacc.tab.c" /* yacc.c:1646  */
+#line 2114 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 103:
-#line 388 "yacc.y" /* yacc.c:1646  */
+#line 389 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2119 "yacc.tab.c" /* yacc.c:1646  */
+#line 2120 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 104:
-#line 390 "yacc.y" /* yacc.c:1646  */
+#line 391 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2125 "yacc.tab.c" /* yacc.c:1646  */
+#line 2126 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 105:
-#line 392 "yacc.y" /* yacc.c:1646  */
+#line 393 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2131 "yacc.tab.c" /* yacc.c:1646  */
+#line 2132 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 106:
-#line 394 "yacc.y" /* yacc.c:1646  */
+#line 395 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2137 "yacc.tab.c" /* yacc.c:1646  */
+#line 2138 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 107:
-#line 398 "yacc.y" /* yacc.c:1646  */
+#line 399 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2143 "yacc.tab.c" /* yacc.c:1646  */
+#line 2144 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 108:
-#line 400 "yacc.y" /* yacc.c:1646  */
+#line 401 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2149 "yacc.tab.c" /* yacc.c:1646  */
+#line 2150 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 109:
-#line 402 "yacc.y" /* yacc.c:1646  */
+#line 403 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2155 "yacc.tab.c" /* yacc.c:1646  */
+#line 2156 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 110:
-#line 404 "yacc.y" /* yacc.c:1646  */
+#line 405 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2161 "yacc.tab.c" /* yacc.c:1646  */
+#line 2162 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 111:
-#line 408 "yacc.y" /* yacc.c:1646  */
+#line 409 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2167 "yacc.tab.c" /* yacc.c:1646  */
+#line 2168 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 112:
-#line 410 "yacc.y" /* yacc.c:1646  */
+#line 411 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2173 "yacc.tab.c" /* yacc.c:1646  */
+#line 2174 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 113:
-#line 412 "yacc.y" /* yacc.c:1646  */
+#line 413 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2179 "yacc.tab.c" /* yacc.c:1646  */
+#line 2180 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 114:
-#line 414 "yacc.y" /* yacc.c:1646  */
+#line 415 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2185 "yacc.tab.c" /* yacc.c:1646  */
+#line 2186 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 115:
-#line 416 "yacc.y" /* yacc.c:1646  */
+#line 417 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2191 "yacc.tab.c" /* yacc.c:1646  */
+#line 2192 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 116:
-#line 420 "yacc.y" /* yacc.c:1646  */
+#line 421 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2197 "yacc.tab.c" /* yacc.c:1646  */
+#line 2198 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 117:
-#line 422 "yacc.y" /* yacc.c:1646  */
+#line 423 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2203 "yacc.tab.c" /* yacc.c:1646  */
+#line 2204 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 118:
-#line 424 "yacc.y" /* yacc.c:1646  */
+#line 425 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2209 "yacc.tab.c" /* yacc.c:1646  */
+#line 2210 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 119:
-#line 426 "yacc.y" /* yacc.c:1646  */
+#line 427 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2215 "yacc.tab.c" /* yacc.c:1646  */
+#line 2216 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 120:
-#line 428 "yacc.y" /* yacc.c:1646  */
+#line 429 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2221 "yacc.tab.c" /* yacc.c:1646  */
+#line 2222 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 121:
-#line 430 "yacc.y" /* yacc.c:1646  */
+#line 431 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2227 "yacc.tab.c" /* yacc.c:1646  */
+#line 2228 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 122:
-#line 432 "yacc.y" /* yacc.c:1646  */
+#line 433 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2233 "yacc.tab.c" /* yacc.c:1646  */
+#line 2234 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 123:
-#line 434 "yacc.y" /* yacc.c:1646  */
+#line 435 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2239 "yacc.tab.c" /* yacc.c:1646  */
+#line 2240 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 124:
-#line 436 "yacc.y" /* yacc.c:1646  */
+#line 437 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2245 "yacc.tab.c" /* yacc.c:1646  */
+#line 2246 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 125:
-#line 438 "yacc.y" /* yacc.c:1646  */
+#line 439 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2251 "yacc.tab.c" /* yacc.c:1646  */
+#line 2252 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 126:
-#line 442 "yacc.y" /* yacc.c:1646  */
+#line 443 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2257 "yacc.tab.c" /* yacc.c:1646  */
+#line 2258 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
   case 127:
-#line 444 "yacc.y" /* yacc.c:1646  */
+#line 445 "yacc.y" /* yacc.c:1646  */
     {}
-#line 2263 "yacc.tab.c" /* yacc.c:1646  */
+#line 2264 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 2267 "yacc.tab.c" /* yacc.c:1646  */
+#line 2268 "yacc.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2491,12 +2492,12 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 447 "yacc.y" /* yacc.c:1906  */
+#line 448 "yacc.y" /* yacc.c:1906  */
 
 
 
 void yyerror(const char *s)
 {
-	cerr<<"error in yacc.l: "<<s<<endl;					//out error information
+	cerr<<s<<" | line:"<<line_no<<endl;					//out error information
 }
 

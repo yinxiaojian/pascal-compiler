@@ -7,9 +7,9 @@ using namespace std;
 extern "C"
 {
     void yyerror(const char *s);
-    int yylex(void);
+    extern int yylex(void);
+    extern int line_no;
 }
-
 %}
 
 %union 
@@ -89,7 +89,7 @@ extern "C"
 %token MOD
 %token AND
 %token NOT
-
+%type<iValue> const_value
 %%
 program : 		program_head  routine  DOT
 	{}
@@ -123,13 +123,13 @@ const_part :	CONST  const_expr_list
 const_expr_list :	const_expr_list  ID  EQUAL  const_value  SEMI
 	{}
 	|	ID  EQUAL  const_value  SEMI
-	{}
+    { cout<<"CONST"<<$1<<" "<<$3<<endl;}
 	;
 
 const_value :	INTEGER
 	{}
 	|	REAL
-	{}
+	{cout<<"REAL"<<$1<<endl;$$=2;}
 	|	CHAR
 	{}
 	|	STRING
@@ -231,7 +231,8 @@ function_decl :	function_head  SEMI  sub_routine  SEMI
 	;
 
 function_head :	FUNCTION  ID  parameters  COLON  simple_type_decl
-	{}
+    {
+    }
 	;
 
 procedure_decl :	procedure_head  SEMI  sub_routine  SEMI
@@ -449,6 +450,6 @@ args_list :		args_list  COMMA  expression
 
 void yyerror(const char *s)
 {
-	cerr<<"error in yacc.l: "<<s<<endl;					//out error information
+	cerr<<s<<" | line:"<<line_no<<endl;					//out error information
 }
 

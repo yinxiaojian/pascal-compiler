@@ -1,8 +1,14 @@
 program hello;
+const i = 1.11;
 var i:integer;
+function gcd(a:integer):integer;
 begin
 	i:=1;
 	writeln(i);
+end
+;
+begin
+    writeln('h');
 end
 .
 {}

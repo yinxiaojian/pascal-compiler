@@ -21,8 +21,9 @@ int main()
         return -1;
     }
     yyin = fp;
+    cout<<"compile begin"<<endl;
     yyparse();
     fclose(fp);
-    cout<<"parsing finish"<<endl;
+    cout<<"compile end"<<endl;
     return 0;
 }

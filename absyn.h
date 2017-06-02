@@ -32,8 +32,8 @@ struct type_decl;
 struct simple_type_decl;
 struct array_type_decl;
 struct record_type_decl;
-//struct sys_type;
-struct name_list;
+//struct name_list;
+typedef identifier name_list
 struct range;
 struct idrange;
 struct field_decl;
@@ -41,10 +41,9 @@ typedef field_decl field_decl_list;
 struct var_decl;
 typedef var_decl var_decl_list;
 struct function_decl;
-//typedef function_decl function_decl_list;
+typedef function_decl function_decl_list;
 struct function_head;
 struct procedure_decl;
-//typedef procedure_decl procedure_decl_list;
 struct procedure_head;
 struct sub_routine;
 struct parameters;
@@ -102,10 +101,383 @@ enum operator
     _NOT
 };
 
+enum sys_type
+{
+    _CHAR,
+    _INTEGER,
+    _REAL,
+    _STRING
+}
+
+enum sys_proc
+{
+    _WRITE,
+    _WRITELN
+};
+
+enum sys_funct
+{
+    _ABS,
+    _CHR,
+    _ODD,
+    _ORD,
+    _PRED,
+    _SQR,
+    _SQRT,
+    _SUCC
+};
+
+enum sys_con
+{
+    _FALSE,
+    _MAXINT,
+    _TRUE
+};
+
+
+struct identifier
+{
+    string name;
+    identifier *next
+    //linked list
+    //name_list
+    
+    identifier(string &token1, identifier *_next)
+    {
+        name = token1;
+        next = _next;
+    }
+    
+}
+
+struct routine
+{
+    routine_head *child1;
+    routine_head
+}
+
+struct sub_routine
+{
+    routine_head *child1;
+    routine_body *child2;
+    sub_routine(routine_head *token1, routine_body *token2)
+    {
+        child1 = token1;
+        child2 = token2;
+    }
+}
+
+struct routine_head
+{
+    label_part *child1;
+    const_part *child2;
+    type_part *child3;
+    var_part *child4;
+    routine_part *child5;
+    routine_head(label_part *token1, const_part *token2. type_part *token4, routine_part *token5)
+    {
+        child1 = token1;
+        child2 = token2;
+        child3 = token3;
+        child4 = token4;
+        child5 = token5;
+    }
+}
+
+struct label_part
+{
+    //not support...
+}
+
+struct const_part
+{
+    const_expr_list *child1;
+    const_part(const_expr_list *token1):child1(token1){}
+
+struct const_expr
+{
+    identifier *child1;
+    const_value *child2;
+    const_expr *next;
+    //linked list
+    //const_expr_list
+
+    const_expr(identifier *token1, const_value *token2, const_expr *_next)
+    {
+        child1 = token1;
+        child2 = token2;
+        next = _next;
+    }
+}
+
+struct const_value
+{
+    int select;
+    union
+    {
+        char pattern1;
+        int pattern2;
+        float pattern3;
+        char* pattern4;
+        sys_con pattern5;
+    } child1;
+
+    const_value(char token1):select(1){child1.pattern1 = token1;}
+    const_value(int token1):select(2){child1.pattern2 = token1;}
+    const_value(float token1):select(3){child1.pattern3 = token1;}
+    const_value(char* token1):select(4){child1.pattern4 = token1;}
+    const_value(sys_con token1):select(5){child1.pattern5 = token1;}
+}
+
+struct type_part
+{
+    type_decl_list *child1;
+    type_part(type_decl_list *token1):child1(token1){}
+}
+
+struct type_definition
+{
+    identifier *child1;
+    type_decl *child2;
+    //type_definition linked list
+    //type_decl_list
+    type_definition *next;
+    type_definition(identifier *token1, type_decl *token2, type_definition *_next)
+    {
+        child1 = token1;
+        child2 = token2;
+        next = _next;
+    }
+}
+
+struct type_decl
+{
+    int select;
+    union
+    {
+        simple_type_decl *pattern1;
+        array_type_decl *pattern2;
+        record_type_decl *pattern3;
+    } child1;
+    type_decl(simple_type_decl *token1):select(1){child1.pattern1 = token1;}
+    type_decl(array_type_decl *token1):select(2){child1.pattern2 = token2;}
+    type_decl(record_type_decl *token1):select(3){child1.pattern3 = token3;}
+}
+
+struct simple_type_decl
+{
+    int select;
+    union
+    {
+        sys_type pattern1;
+        identifier *pattern2;
+        name_list *pattern3;
+        struct
+        {
+            const_value *child1;
+            const_value *child2;
+            int minus_select;
+        } pattern4;
+        struct
+        {
+            identifier *child1;
+            identifier *child2;
+        } pattern5;
+    } child1;
+    simple_type_decl(sys_type token1)
+    {
+        select = 1;
+        child1.pattern1 = token1;
+    }
+    simple_type_decl(identifier *token1)
+    {
+        select = 2;
+        child1.pattern2 = token1;
+    }
+    simple_type_decl(name_list *token3)
+    {
+        select = 3;
+        child1.pattern3 = token3;
+    }
+    simple_type_decl(const_value *token1, const_value *token2, int _minus_select)
+    {
+        select = 4;
+        child1.pattern4.child1 = token1;
+        child1.pattern4.child2 = token3;
+        child1.pattern4.minus_select = _minus_select;
+    }
+    simple_type_decl(identifier *token1, identifier *token2)
+    {
+        select = ;
+        child1.pattern5.child1 = token1;
+        child1.pattern5.child2 = token2;
+    }
+}
+
+struct array_type_decl
+{
+    simple_type_decl *child1;
+    type_decl *child2;
+    array_type_decl(simple_type_decl *token1, type_decl *token2)
+    {
+        child1 = token1;
+        child2 = token2;
+    }
+}
+
+//TODO replace with record_type_decl
+struct record_type_decl
+{
+    field_decl_list *child1;
+    record_type_decl(field_decl_list *token1):child1(token1){}
+}
+
+struct field_decl
+{
+    name_list *child1;
+    type_decl *child2;
+    field_decl *next;
+    field_decl(name_list *token1, type_decl *token2, field_decl *_next)
+    {
+        child1 = token1;
+        child2 = token2;
+        next = _next;
+    }
+}
+//name_list
+
+struct var_part
+{
+    var_decl_list *child1;
+    var_part(var_decl_list *token1):child1(token1){}
+}
+
+struct var_decl
+{
+    name_list *child1;
+    type_decl *child2;
+    var_decl *next;
+    var_decl(name_list *token1, type_decl *token2, var_decl *_next)
+    {
+        child1 = token1;
+        child2 = token2;
+        next = _next;
+    }
+}
+
+struct routine_part
+{
+    function_decl_list *child1;
+    procedure_decl *child2;
+    routine_part(function_decl_list *token1, procedure_decl *token2)
+    {
+        child1 = token1;
+        child2 = token2;
+    }
+}
+
+struct function_decl
+{
+    function_head *child1;
+    sub_routine *child2;
+    function_decl *next;
+    function_decl(function_head *token1, sub_routine *token2, function_decl *token3)
+    {
+        child1 = token1;
+        child2 = token2;
+        child3 = token3;
+    }
+}
+
+struct function_head
+{
+    identifier *child1
+    parameters *child2;
+    simple_type_decl *child3;
+    function_head(identifier *token1, parameters *token2, simple_type_decl *token3)
+    {
+        child1 = token1;
+        child1 = token2;
+        child3 = token3;
+    }
+}
+
+struct procedure_decl
+{
+    procedure_head *child1;
+    sub_routine *child2;
+    procedure_decl *next;
+
+    procedure_decl(procedure_head *token1, sub_routine *token2, procedure_decl *_next)
+    {
+        child1 = token1;
+        child2 = token2;
+        next = _next;
+    }
+}
+
+struct procedure_head
+{
+    identifier *child1;
+    parameters *child2;
+    procedure_head(identifier *token1, parameters *token2)
+    {
+        child1 = token1;
+        child2 = token2;
+    }
+}
+
+struct parameters
+{
+    para_decl_list *child1;
+    parameters(para_type_list *token1):child1(token1){}
+}
+
+struct para_type_list
+{
+    var_para_list *child1;
+    simple_type_decl *child2;
+    union
+    {
+        struct
+        {
+            var_para_list *child1;
+            simple_type_decl *child2;
+        } pattern1;
+        struct
+        {
+            val_para_list *child1;
+            para_type_list *child2;
+        } pattern2;
+    } child1;
+    para_type_list *next;
+
+    para_type_list(var_para_list *token1, simple_type_decl *token2, para_type_list *_next)
+    {
+        child1.pattern1.child1 = token1;
+        child1.pattern1.child2 = token2;
+        next = _next;
+    }
+
+    para_type_list(var_para_list *token1, para_type_list *token2, para_type_list *_next)
+    {
+        child1.pattern2.child1 = token1;
+        child1.pattern2.child2 = token2;
+        next = _next;
+    }
+}
+
+struct routine_body
+{
+    compound_stmt *child1;
+    routine_body(compound_stmt *token1):child1(token1){}
+}
+
 struct compound_stmt
 {
+    // TODO:waitting for check
     stmt_list *child1;
-    stmt_list(stmt_list *token1):child1(token1){}
+    compound_stmt(stmt_list *token1):child1(token1){}
 }
 
 struct stmt

@@ -6,7 +6,7 @@
  ************************************************************************/
 
 #ifndef _ABSYN_H
-#define 
+#define _ABSYN_H 
 #include <iostream>
 #include <string>
 
@@ -32,8 +32,7 @@ struct type_decl;
 struct simple_type_decl;
 struct array_type_decl;
 struct record_type_decl;
-//struct name_list;
-typedef identifier name_list
+struct name_list;
 struct range;
 struct idrange;
 struct field_decl;
@@ -76,11 +75,12 @@ struct factor;
 
 struct identifier;
 struct sys_funct;
+struct sys_proc;
 
 //definition
 
 //operator definition: priority low->high
-enum operator
+enum operation
 {
     _GE,
     _GT,
@@ -107,15 +107,15 @@ enum sys_type
     _INTEGER,
     _REAL,
     _STRING
-}
+};
 
-enum sys_proc
+enum SYS_PROC
 {
     _WRITE,
     _WRITELN
 };
 
-enum sys_funct
+enum SYS_FUNCT
 {
     _ABS,
     _CHR,
@@ -134,11 +134,26 @@ enum sys_con
     _TRUE
 };
 
+struct sys_proc
+{
+    SYS_PROC child1;
+    sys_proc(SYS_PROC token1):child1(token1) {}
+};
+
+struct sys_funct
+{
+    SYS_FUNCT child1;
+    sys_funct(SYS_FUNCT token1):child1(token1) {}
+};
 
 struct identifier
 {
     string name;
-    identifier *next
+    int linenumber;
+    int offset;
+    int scope;
+    
+    identifier *next;
     //linked list
     //name_list
     
@@ -148,13 +163,35 @@ struct identifier
         next = _next;
     }
     
-}
+};
+
+struct program
+{
+    program_head *child1;
+    routine *child2;
+    program(program_head *token1, routine *token2)
+    {
+        child1 = token1;
+        child2 = token2;
+    }
+};
+
+struct program_head
+{
+    identifier *child1;
+    program_head(identifier *token1):child1(token1){}
+};
 
 struct routine
 {
     routine_head *child1;
-    routine_head
-}
+    routine_body *child2;
+    routine(routine_head *token1, routine_body *token2)
+    {
+        child1 = token1;
+        child2 = token2;
+    }
+};
 
 struct sub_routine
 {
@@ -165,7 +202,7 @@ struct sub_routine
         child1 = token1;
         child2 = token2;
     }
-}
+};
 
 struct routine_head
 {
@@ -174,7 +211,7 @@ struct routine_head
     type_part *child3;
     var_part *child4;
     routine_part *child5;
-    routine_head(label_part *token1, const_part *token2. type_part *token4, routine_part *token5)
+    routine_head(label_part *token1, const_part *token2, type_part *token3, var_part *token4, routine_part *token5)
     {
         child1 = token1;
         child2 = token2;
@@ -182,17 +219,18 @@ struct routine_head
         child4 = token4;
         child5 = token5;
     }
-}
+};
 
 struct label_part
 {
     //not support...
-}
+};
 
 struct const_part
 {
     const_expr_list *child1;
     const_part(const_expr_list *token1):child1(token1){}
+};
 
 struct const_expr
 {
@@ -208,7 +246,7 @@ struct const_expr
         child2 = token2;
         next = _next;
     }
-}
+};
 
 struct const_value
 {
@@ -227,13 +265,13 @@ struct const_value
     const_value(float token1):select(3){child1.pattern3 = token1;}
     const_value(char* token1):select(4){child1.pattern4 = token1;}
     const_value(sys_con token1):select(5){child1.pattern5 = token1;}
-}
+};
 
 struct type_part
 {
     type_decl_list *child1;
     type_part(type_decl_list *token1):child1(token1){}
-}
+};
 
 struct type_definition
 {
@@ -248,7 +286,7 @@ struct type_definition
         child2 = token2;
         next = _next;
     }
-}
+};
 
 struct type_decl
 {
@@ -260,9 +298,9 @@ struct type_decl
         record_type_decl *pattern3;
     } child1;
     type_decl(simple_type_decl *token1):select(1){child1.pattern1 = token1;}
-    type_decl(array_type_decl *token1):select(2){child1.pattern2 = token2;}
-    type_decl(record_type_decl *token1):select(3){child1.pattern3 = token3;}
-}
+    type_decl(array_type_decl *token1):select(2){child1.pattern2 = token1;}
+    type_decl(record_type_decl *token1):select(3){child1.pattern3 = token1;}
+};
 
 struct simple_type_decl
 {
@@ -294,25 +332,25 @@ struct simple_type_decl
         select = 2;
         child1.pattern2 = token1;
     }
-    simple_type_decl(name_list *token3)
+    simple_type_decl(name_list *token1)
     {
         select = 3;
-        child1.pattern3 = token3;
+        child1.pattern3 = token1;
     }
     simple_type_decl(const_value *token1, const_value *token2, int _minus_select)
     {
         select = 4;
         child1.pattern4.child1 = token1;
-        child1.pattern4.child2 = token3;
+        child1.pattern4.child2 = token2;
         child1.pattern4.minus_select = _minus_select;
     }
     simple_type_decl(identifier *token1, identifier *token2)
     {
-        select = ;
+        select = 5;
         child1.pattern5.child1 = token1;
         child1.pattern5.child2 = token2;
     }
-}
+};
 
 struct array_type_decl
 {
@@ -323,14 +361,14 @@ struct array_type_decl
         child1 = token1;
         child2 = token2;
     }
-}
+};
 
 //TODO replace with record_type_decl
 struct record_type_decl
 {
     field_decl_list *child1;
     record_type_decl(field_decl_list *token1):child1(token1){}
-}
+};
 
 struct field_decl
 {
@@ -343,14 +381,14 @@ struct field_decl
         child2 = token2;
         next = _next;
     }
-}
+};
 //name_list
 
 struct var_part
 {
     var_decl_list *child1;
     var_part(var_decl_list *token1):child1(token1){}
-}
+};
 
 struct var_decl
 {
@@ -363,7 +401,7 @@ struct var_decl
         child2 = token2;
         next = _next;
     }
-}
+};
 
 struct routine_part
 {
@@ -374,33 +412,33 @@ struct routine_part
         child1 = token1;
         child2 = token2;
     }
-}
+};
 
 struct function_decl
 {
     function_head *child1;
     sub_routine *child2;
     function_decl *next;
-    function_decl(function_head *token1, sub_routine *token2, function_decl *token3)
+    function_decl(function_head *token1, sub_routine *token2, function_decl *_next)
     {
         child1 = token1;
         child2 = token2;
-        child3 = token3;
+        next = _next;
     }
-}
+};
 
 struct function_head
 {
-    identifier *child1
+    identifier *child1;
     parameters *child2;
     simple_type_decl *child3;
     function_head(identifier *token1, parameters *token2, simple_type_decl *token3)
     {
         child1 = token1;
-        child1 = token2;
+        child2 = token2;
         child3 = token3;
     }
-}
+};
 
 struct procedure_decl
 {
@@ -414,7 +452,7 @@ struct procedure_decl
         child2 = token2;
         next = _next;
     }
-}
+};
 
 struct procedure_head
 {
@@ -425,18 +463,16 @@ struct procedure_head
         child1 = token1;
         child2 = token2;
     }
-}
+};
 
 struct parameters
 {
     para_decl_list *child1;
     parameters(para_type_list *token1):child1(token1){}
-}
+};
 
 struct para_type_list
 {
-    var_para_list *child1;
-    simple_type_decl *child2;
     union
     {
         struct
@@ -444,6 +480,7 @@ struct para_type_list
             var_para_list *child1;
             simple_type_decl *child2;
         } pattern1;
+
         struct
         {
             val_para_list *child1;
@@ -465,27 +502,27 @@ struct para_type_list
         child1.pattern2.child2 = token2;
         next = _next;
     }
-}
+};
 
 struct routine_body
 {
     compound_stmt *child1;
     routine_body(compound_stmt *token1):child1(token1){}
-}
+};
 
 struct compound_stmt
 {
     // TODO:waitting for check
     stmt_list *child1;
     compound_stmt(stmt_list *token1):child1(token1){}
-}
+};
 
 struct stmt
 {
     int select;
     int child1;
     non_label_stmt *child2;
-    stmt *next
+    stmt *next;
     //linked list
     //stmt->stmt->stmt
     
@@ -503,7 +540,7 @@ struct stmt
         child2 = token1;
         next = _next;
     }
-}
+};
 
 struct non_label_stmt
 {
@@ -530,7 +567,7 @@ struct non_label_stmt
     non_label_stmt(for_stmt *token1):select(7){ child1.pattern7 = token1; }
     non_label_stmt(case_stmt *token1):select(8){ child1.pattern8 = token1; }
     non_label_stmt(goto_stmt *token1):select(9){ child1.pattern9 = token1; }
-}
+};
 
 struct assign_stmt
 {
@@ -555,13 +592,13 @@ struct assign_stmt
             identifier *child1;
             identifier *child2;
             expression *child3;
-        }
-    } child1;
+        } pattern3;
+   } child1;
 
     assign_stmt(identifier *token1, expression *token2)
     {
         select = 1;
-        child1.pattern1.child1 = token1
+        child1.pattern1.child1 = token1;
         child1.pattern1.child2 = token2;
     }
 
@@ -580,7 +617,7 @@ struct assign_stmt
         child1.pattern3.child2 = token2;
         child1.pattern3.child3 = token3;
     }
-}
+};
 
 struct proc_stmt
 {
@@ -621,7 +658,7 @@ struct proc_stmt
         child1.pattern3 = token1;
     }
 
-    proc_stmt(sys_func *token1, expression_list *token2)
+    proc_stmt(sys_proc *token1, expression_list *token2)
     {
         select = 4;
         child1.pattern4.child1 = token1;
@@ -633,7 +670,7 @@ struct proc_stmt
         select = 5;
         child1.pattern5 = token1;
     }
-}
+};
 
 struct if_stmt
 {
@@ -646,7 +683,7 @@ struct if_stmt
         child2 = token2;
         child3 = token3;
     }
-}
+};
 
 struct else_clause
 {
@@ -654,7 +691,7 @@ struct else_clause
     stmt_list *child1;
     else_clause(stmt *token1):child1(token1){ select = 1; }
     else_clause(){ select = 2; }
-}
+};
 
 struct repeat_stmt
 {
@@ -665,7 +702,7 @@ struct repeat_stmt
         child1 = token1;
         child2 = token2;
     }
-}
+};
 
 struct while_stmt
 {
@@ -676,7 +713,7 @@ struct while_stmt
         child1 = token1;
         child2 = token2;
     }
-}
+};
 
 struct for_stmt
 {
@@ -694,7 +731,7 @@ struct for_stmt
         child3 = token3;
         child4 = token4;
     }
-}
+};
 
 struct case_stmt
 {
@@ -705,7 +742,7 @@ struct case_stmt
         child1 = token1;
         child2 = token2;
     }
-}
+};
 
 struct case_expr
 {
@@ -735,28 +772,29 @@ struct case_expr
         child2 = token2;
         next = _next;
     }
-}
+};
+
 struct goto_stmt
 {
     int child1;//goto: integer 
-    goto_stmt(int token1):child1(token1);
-}
+    goto_stmt(int token1):child1(token1){};
+};
 
 struct expression
 {
     expression *child1;
-    operator child2;
+    operation child2;
     expr *child3;
     expression *next;
     //expression_list is a linked list
     //like:expression->expression->expression
 
-    expression(expression *token1, int operator, expr *token2, expression *_next)
+    expression(expression *token1, int _operator, expr *token2, expression *_next)
     {
         child1 = token1;
         child3 = token2;
         next = _next;
-        switch(operator)
+        switch(_operator)
         {
             case 1: child2 = _GE; break;
             case 2: child2 = _GT; break;
@@ -767,19 +805,19 @@ struct expression
             default: break;
         }
     }
-}
+};
 
 struct expr
 {
     expr *child1;
-    operator child2;
+    operation child2;
     term *child3;
     
-    expr(expr *token1, int operator, term *token2)
+    expr(expr *token1, int _operator, term *token2)
     {
         child1 = token1;
         child3 = token2;
-        switch(operator)
+        switch(_operator)
         {
             case 1: child2 = _PLUS; break;
             case 2: child2 = _MINUS; break;
@@ -787,19 +825,19 @@ struct expr
             default: break;
         }
     }
-}
+};
 
 struct term 
 {
     term *child1;
-    operator child2;
+    operation child2;
     factor *child3;
 
-    term(term *token1, int operator, factor *token2)
+    term(term *token1, int _operator, factor *token2)
     {
         child1 = token1;
         child3 = token2;
-        switch(operator)
+        switch(_operator)
         {
             case 1: child2 = _MUL; break;
             case 2: child2 = _DIV; break;
@@ -808,7 +846,7 @@ struct term
             default: break;
         }
     }
-}
+};
 
 struct factor
 {
@@ -869,7 +907,7 @@ struct factor
         child1.pattern4.child2 = token2;
     }
 
-    factor(const_part *token1)
+    factor(const_value *token1)
     {
         select = 5;
         child1.pattern5 = token1;
@@ -887,10 +925,10 @@ struct factor
         if(_select == 7)
             child1.pattern7 = token1;
         else if(_select == 8)
-            child1.pattern8 = token2;
+            child1.pattern8 = token1;
     }
 
-    factor(identifier *token1,  expression *token2)
+    factor(identifier *token1,  expression *token2, int overload)
     {
         select = 9;
         child1.pattern9.child1 = token1;
@@ -903,9 +941,6 @@ struct factor
         child1.pattern10.child1 = token1;
         child1.pattern10.child2 = token2;
     }
-}
+};
 
-struct identifier
-{
-}
 #endif

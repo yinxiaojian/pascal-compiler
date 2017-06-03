@@ -12,6 +12,7 @@
 #include <vector>
 #include <hash_map>
 #include <string>
+#include <assert.h>
 #include "declare.h"
 
 #define NOT_EXIST -1
@@ -27,6 +28,7 @@ using namespace std;
 
 struct scopeNode
 {
+	// parent start from 0, 0 is root 0->1->... format
     int parent;
     int select;
     string name;
@@ -39,12 +41,12 @@ struct scopeNode
     scopeNode(int p, function_decl *t):parent(p),select(2) { type.type2 = t; name = t->child1->child1->name;}
     scopeNode(int p, procedure_decl *t):parent(p),select(3) { type.type3 = t; name = t->child1->child1->name;}
     scopeNode(int p):parent(p),select(0) { name = "ROOT"; }
-    scopeNode(int p, const string &s): parent(p), select(0) { name = "GLOBAL";}
+    //scopeNode(int p, const string &s): parent(p), select(0) { name = "ROOT";}
     void print() const { 
-        cout<<"PARENT: "<<parent<<endl;
+        cout<<"PARENT: "<<parent<<" || ";
         /*cout id*/
         switch(select) {
-            case 0: cout<<"UNIVERSAL"<<endl; break;
+            //case 0: cout<<"UNIVERSAL"<<endl; break;
             case 1: cout<<"PROGRAM : "<<name<<endl; break;
             case 2: cout<<"FUNCTION : "<<name<<endl; break;
             case 3: cout<<"PROCEDURE : "<<name<<endl; break;
@@ -56,58 +58,26 @@ struct scopeNode
 class symbolTable {
 private :
     vector<scopeNode> scope;
-    hash_map<string, identifier *head> table;//variable and const value
+    unordered_map<string, vector<identifier *>> hashTable;//variable and const value
 
 public :
-    void printScope();
-    void printIdentifier();
-    void printConst();
+    void printScope();			//print all scope from root
+    void printSymbolTable();	//print all symbol : const var ..
 
-    int insertScope() {//for global scope only
-        scope.push_back(scopeNode(-1, "global"));
-        return scope.size()-1;
-    }
+	int insertScope(program *id, int parent_scope);
+	int insertScope(function_decl *id, int parent_scope);
+	int insertScope(procedure_decl *id, int parent_scope);
 
-    int insertScope(program *id, int parent_scope) {
-        if(lookUpScope(id)!=-1) {
-            return NOT_EXIST;
-        }
-        scope.push_back(scopeNode(parent_scope, id));
-        return scope.size()-1;
-    }
-    int insertScope(function_decl *id, int parent_scope) {
-        if(lookUpScope(id)!=-1) {
-            return NOT_EXIST;
-        }
-        scope.push_back(scopeNode(parent_scope, id));
-        return scope.size()-1;
-    }
-    int insertScope(procedure_decl *id, int parent_scope) {
-        if(lookUpScope(id)!=-1) {
-            return NOT_EXIST;
-        }
-        scope.push_back(scopeNode(parent_scope, id));
-        return scope.size()-1;
-    }
-
-    int lookUpScope(program *id);
     int lookUpScope(function_decl *id);
     int lookUpScope(procedure_decl *id);
+    
+    bool insertSymbol(identifier *id, int scope);
+    identifier *lookUpSymbol(const string &id, int s) const;
 
     scopeNode getScope(int s) const {
-        if(s>=scope.size())
-        {
-            cout<<"error scope address"<<endl;
-            exit(1);
-        }
+        assert(s<s.size())
         return scope.at(s);
     }
-    
-    bool insertMap(identifier *id, int scope);
-    
-
-    identifier *lookUpMap(const identifier * const id, int s) const ;  
-    identifier *lookUpMap(const string &id, int s) const;
 };
 
 #endif

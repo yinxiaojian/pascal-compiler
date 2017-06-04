@@ -24,7 +24,8 @@ struct const_part;
 struct type_part;
 struct var_part;
 struct routine_part;
-struct const_expr_list;
+struct const_expr;
+typedef const_expr const_expr_list;
 struct const_value;
 struct type_definition;
 typedef type_definition type_decl_list;
@@ -383,6 +384,17 @@ struct field_decl
     }
 };
 //name_list
+
+struct name_list
+{
+    identifier *child1;
+    name_list *next;
+    name_list(identifier *token1, name_list *_next)
+    {
+        child1 = token1;
+        next = _next;
+    }
+};
 
 struct var_part
 {

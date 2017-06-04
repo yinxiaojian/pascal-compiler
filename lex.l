@@ -3,8 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "absyn.h"
 #include "yacc.tab.h"
-int line_no = 0;
+int line_no = 1;
 
 // compile with C
 extern "C"
@@ -45,27 +46,6 @@ Z [zZ]
 NQUOTE [^']
 
 %%
-"false" {yylval.syscon = SYS_CON_FALSE;return SYS_CON;}
-"true" {yylval.syscon = SYS_CON_TRUE;return SYS_CON;}
-"maxint" {yylval.syscon = SYS_CON_MAXINT;return SYS_CON;}
-
-"abs" {yylval.sysFunc=SYS_FUNCT_ABS;return SYS_FUNCT;}
-"chr" {yylval.sysFunc=SYS_FUNCT_CHR;return SYS_FUNCT;}
-"odd" {yylval.sysFunc=SYS_FUNCT_ODD;return SYS_FUNCT;}
-"ord" {yylval.sysFunc=SYS_FUNCT_ORD;return SYS_FUNCT;}
-"pred" {yylval.sysFunc=SYS_FUNCT_PRED;return SYS_FUNCT;}
-"sqr" {yylval.sysFunc=SYS_FUNCT_SQR;return SYS_FUNCT;}
-"sqrt" {yylval.sysFunc=SYS_FUNCT_SQRT;return SYS_FUNCT;}
-"succ" {yylval.sysFunc=SYS_FUNCT_SUCC;return SYS_FUNCT;}
-
-"write" {yylval.sysProc=SYS_PROC_WRITE;return SYS_PROC;}
-"writeln" {yylval.sysProc=SYS_PROC_WRITELN;return SYS_PROC;}
-
-
-"boolean" {yylval.sysType = SYS_TYPE_BOOL;return SYS_TYPE;}
-"char" {yylval.sysType = SYS_TYPE_CHAR;return SYS_TYPE;}
-"integer" {yylval.sysType = SYS_TYPE_INTEGER;return SYS_TYPE;}
-"real" {yylval.sysType = SYS_TYPE_REAL;return SYS_TYPE;}
 
 {A}{N}{D} return AND;
 {A}{R}{R}{A}{Y} return ARRAY;
@@ -86,14 +66,38 @@ NQUOTE [^']
 {O}{R} return OR;
 {P}{R}{O}{C}{E}{D}{U}{R}{E} return PROCEDURE;
 {P}{R}{O}{G}{R}{A}{M} return PROGRAM;
+{R}{E}{A}{D} return READ;
 {R}{E}{C}{O}{R}{D} return RECORD;
 {R}{E}{P}{E}{A}{T} return REPEAT;
+{S}{T}{R}{I}{N}{G} return STRING;
 {T}{H}{E}{N} return THEN;
 {T}{O} return TO;
 {T}{Y}{P}{E} return TYPE;
 {U}{N}{T}{I}{L} return UNTIL;
 {V}{A}{R} return VAR;
 {W}{H}{I}{L}{E} return WHILE;
+
+{F}{A}{L}{S}{E} {yylval.sysCon = SYS_CON_FALSE;return SYS_CON;}
+{T}{R}{U}{E} {yylval.sysCon = SYS_CON_TRUE;return SYS_CON;}
+{M}{A}{X}{I}{N}{T} {yylval.sysCon = SYS_CON_MAXINT;return SYS_CON;}
+
+{A}{B}{S} {yylval.sysFunc=SYS_FUNCT_ABS;return SYS_FUNCT;}
+{C}{H}{R} {yylval.sysFunc=SYS_FUNCT_CHR;return SYS_FUNCT;}
+{O}{D}{D} {yylval.sysFunc=SYS_FUNCT_ODD;return SYS_FUNCT;}
+{O}{R}{D} {yylval.sysFunc=SYS_FUNCT_ORD;return SYS_FUNCT;}
+{P}{R}{E}{D} {yylval.sysFunc=SYS_FUNCT_PRED;return SYS_FUNCT;}
+{S}{Q}{R} {yylval.sysFunc=SYS_FUNCT_SQR;return SYS_FUNCT;}
+{S}{Q}{R}{T} {yylval.sysFunc=SYS_FUNCT_SQRT;return SYS_FUNCT;}
+{S}{U}{C}{C} {yylval.sysFunc=SYS_FUNCT_SUCC;return SYS_FUNCT;}
+
+{W}{R}{I}{T}{E} {yylval.sysProc=SYS_PROC_WRITE;return SYS_PROC;}
+{W}{R}{I}{T}{E}{L}{N} {yylval.sysProc=SYS_PROC_WRITELN;return SYS_PROC;}
+
+
+{B}{O}{O}{L}{E}{A}{N} {yylval.sysType = SYS_TYPE_BOOL;return SYS_TYPE;}
+{C}{H}{A}{R} {yylval.sysType = SYS_TYPE_CHAR;return SYS_TYPE;}
+{I}{N}{T}{E}{G}{E}{R} {yylval.sysType = SYS_TYPE_INTEGER;return SYS_TYPE;}
+{R}{E}{A}{L} {yylval.sysType = SYS_TYPE_REAL;return SYS_TYPE;}
 
 [a-zA-Z]([a-zA-Z0-9_])* {
     yylval.sValue = (char*)malloc(strlen(yytext)+1);

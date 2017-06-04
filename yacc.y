@@ -2,13 +2,14 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
+#include "absyn.h"
 using namespace std;
 
 extern "C"
 {
     void yyerror(const char *s);
     extern int yylex(void);
-    extern int line_no;
+    //extern int line_no;
 }
 %}
 
@@ -20,14 +21,71 @@ extern "C"
     double rValue;
     int sIndex;
     int sysType;
-    int syscon;
+    int sysCon;
     int sysProc;
     int sysFunc;
+
+    /*non-terminal*/
+    program *nt1;
+    program_head *nt2;
+    routine *nt3;
+    routine_head *nt4;
+    routine_body *nt5;
+    label_part *nt6;
+    const_part *nt7;
+    type_part *nt8;
+    var_part *nt9;
+    routine_part *nt10;
+    const_expr_list *nt12;
+    const_value *nt13;
+    type_definition *nt14;
+    type_decl_list *nt15;
+    type_decl *nt16;
+    simple_type_decl *nt17;
+    array_type_decl *nt18;
+    record_type_decl *nt19;
+    name_list *nt20;
+    field_decl *nt21;
+    field_decl_list *nt22;
+    var_decl *nt23;
+    var_decl_list *nt24;
+    function_decl *nt25;
+    function_head *nt27;
+    procedure_decl *nt28;
+    procedure_head *nt29;
+    sub_routine *nt30;
+    parameters *nt31;
+    para_type_list *nt32;
+    para_decl_list *nt33;
+    var_para_list *nt34;
+    val_para_list *nt35;
+    compound_stmt *nt36;
+    stmt *nt37;
+    stmt_list *nt38;
+    non_label_stmt *nt39;
+    assign_stmt *nt40;
+    proc_stmt *nt41;
+    if_stmt *nt42;
+    repeat_stmt *nt43;
+    while_stmt *nt44;
+    for_stmt *nt45;
+    case_stmt *nt46;
+    goto_stmt *nt47;
+    expression *nt48;
+    args_list *nt49;
+    expression_list *nt50;
+    else_clause *nt51;
+    case_expr *nt52;
+    case_expr_list *nt53;
+    expr *nt54;
+    term *nt55;
+    factor *nt56;
 }
+
 
 %token <iValue> INTEGER
 %token <sValue> STRING
-%token <cValue>  CHAR
+%token <cValue> CHAR
 %token <rValue> REAL
 %token <sValue> ID
 
@@ -36,68 +94,82 @@ extern "C"
 %token <sysProc> SYS_PROC
 %token <sysFunc> SYS_FUNCT
 
-%token SYS_CON_TRUE SYS_CON_FALSE SYS_CON_MAXINT SYS_TYPE_INTEGER SYS_TYPE_REAL SYS_TYPE_CHAR
-%token SYS_TYPE_BOOL SYS_FUNCT_ABS SYS_FUNCT_CHR SYS_FUNCT_ODD SYS_FUNCT_ORD SYS_FUNCT_PRED
-%token SYS_FUNCT_SQR SYS_FUNCT_SQRT SYS_FUNCT_SUCC SYS_PROC_WRITE SYS_PROC_WRITELN
+%token SYS_CON_TRUE SYS_CON_FALSE SYS_CON_MAXINT 
+%token SYS_TYPE_INTEGER SYS_TYPE_REAL SYS_TYPE_CHAR SYS_TYPE_BOOL 
+%token SYS_FUNCT_ABS SYS_FUNCT_CHR SYS_FUNCT_ODD SYS_FUNCT_ORD SYS_FUNCT_PRED SYS_FUNCT_SQR SYS_FUNCT_SQRT SYS_FUNCT_SUCC 
+%token SYS_PROC_WRITE SYS_PROC_WRITELN
 
-%token DOT
-%token PROGRAM
-%token SEMI
-%token CONST
-%token EQUAL
-%token TYPE
-%token ARRAY
-%token LB
-%token RB
-%token OF
-%token RECORD
-%token END
-%token COLON
-%token COMMA
-%token LP
-%token RP
-%token DOTDOT
-%token MINUS
-%token VAR
-%token FUNCTION
-%token PROCEDURE
-%token ASSIGN
-%token READ
-%token PBEGIN
-%token IF
-%token THEN
-%token ELSE
-%token REPEAT
-%token UNTIL
-%token WHILE
-%token DO
-%token FOR
-%token TO
-%token DOWNTO
-%token CASE
-%token GOTO
-%token GE
-%token GT
-%token LE
-%token LT
-%token UNEQUAL
-%token PLUS
-%token OR
-%token MUL
-%token DIV
-%token RDIV
-%token MOD
-%token AND
-%token NOT
-%type<iValue> const_value
+%token DOT PROGRAM SEMI CONST EQUAL TYPE ARRAY LB RB OF RECORD END COLON COMMA LP RP DOTDOT
+%token MINUS VAR FUNCTION PROCEDURE ASSIGN READ PBEGIN IF THEN ELSE REPEAT UNTIL WHILE
+%token DO FOR TO DOWNTO CASE GOTO GE GT LE LT UNEQUAL PLUS OR MUL DIV MOD AND NOT
+
+%type <nt1> program
+%type <nt2> program_head
+%type <nt3> routine
+%type <nt4> routine_head
+%type <nt5> routine_body
+%type <nt6> label_part
+%type <nt7> const_part
+%type <nt8> type_part
+%type <nt9> var_part
+%type <nt10> routine_part
+%type <nt12> const_expr_list
+%type <nt13> const_value
+%type <nt14> type_definition
+%type <nt15> type_decl_list
+%type <nt16> type_decl
+%type <nt17> simple_type_decl
+%type <nt18> array_type_decl
+%type <nt19> record_type_decl
+%type <nt20> name_list
+%type <nt21> field_decl
+%type <nt22> field_decl_list
+%type <nt23> var_decl
+%type <nt24> var_decl_list
+%type <nt25> function_decl
+%type <nt27> function_head
+%type <nt28> procedure_decl
+%type <nt29> procedure_head
+%type <nt30> sub_routine
+%type <nt31> parameters
+%type <nt32> para_type_list
+%type <nt33> para_decl_list
+%type <nt34> var_para_list
+%type <nt35> val_para_list
+%type <nt36> compound_stmt
+%type <nt37> stmt
+%type <nt38> stmt_list
+%type <nt39> non_label_stmt
+%type <nt40> assign_stmt
+%type <nt41> proc_stmt
+%type <nt42> if_stmt
+%type <nt43> repeat_stmt
+%type <nt44> while_stmt
+%type <nt45> for_stmt
+%type <nt46> case_stmt
+%type <nt47> goto_stmt
+%type <nt48> expression
+%type <nt49> args_list
+%type <nt50> expression_list
+%type <nt51> else_clause
+%type <nt52> case_expr
+%type <nt53> case_expr_list
+%type <nt54> expr
+%type <nt55> term
+%type <nt56> factor
+
 %%
 program : 		program_head  routine  DOT
-	{}
+    {
+        string st = "sa";
+        identifier *a = new identifier(st,NULL);
+        cout<<a->name;
+    }
 	;
 
 program_head : 	PROGRAM  ID  SEMI
 	{}
-	;
+    ;
 
 routine : 		routine_head  routine_body
 	{}
@@ -108,7 +180,7 @@ sub_routine : 	routine_head  routine_body
 	;
 
 routine_head : 	label_part  const_part  type_part  var_part  routine_part
-	{}
+	{cout<<"test"<<line_no<<endl;}
 	;
 
 label_part : 	{}
@@ -123,13 +195,13 @@ const_part :	CONST  const_expr_list
 const_expr_list :	const_expr_list  ID  EQUAL  const_value  SEMI
 	{}
 	|	ID  EQUAL  const_value  SEMI
-    { cout<<"CONST"<<$1<<" "<<$3<<endl;}
+    {}
 	;
 
 const_value :	INTEGER
 	{}
 	|	REAL
-	{cout<<"REAL"<<$1<<endl;$$=2;}
+	{}
 	|	CHAR
 	{}
 	|	STRING
@@ -223,7 +295,9 @@ routine_part:	routine_part  function_decl
 	|	function_decl
 	{}	
 	|	procedure_decl
-	|{}
+	{}
+	|
+	{}
 	;
 
 function_decl :	function_head  SEMI  sub_routine  SEMI

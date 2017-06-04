@@ -1,6 +1,6 @@
 LEX=flex
 YACC=bison
-CC=g++
+CC=g++ -std=c++11
 OBJECT=main
 
 $(OBJECT): lex.yy.o yacc.tab.o main.cpp

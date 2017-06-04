@@ -18,8 +18,8 @@ extern "C"
     int iValue;
     char* sValue;
     char cValue;
-    double rValue;
-    int sIndex;
+    float rValue;
+
     int sysType;
     int sysCon;
     int sysProc;
@@ -89,7 +89,7 @@ extern "C"
 %token <rValue> REAL
 %token <sValue> ID
 
-%token <syscon> SYS_CON
+%token <sysCon> SYS_CON
 %token <sysType> SYS_TYPE
 %token <sysProc> SYS_PROC
 %token <sysFunc> SYS_FUNCT
@@ -161,80 +161,105 @@ extern "C"
 %%
 program : 		program_head  routine  DOT
     {
-        string st = "sa";
-        identifier *a = new identifier(st,NULL);
-        cout<<a->name;
+        $$ = new program($1,$2);
+        //absTree = $$;
     }
 	;
 
 program_head : 	PROGRAM  ID  SEMI
-	{}
+    {
+        identifier *temp = new identifier($2);
+        $$ = new program_head(temp); 
+    }
     ;
 
 routine : 		routine_head  routine_body
-	{}
+	{ $$ = new routine($1, $2); }
 	;
 
 sub_routine : 	routine_head  routine_body
-	{}
+	{ $$ = new sub_routine($1, $2); }
 	;
 
 routine_head : 	label_part  const_part  type_part  var_part  routine_part
-	{cout<<"test"<<line_no<<endl;}
+	{ $$ = new routine_head($1,$2,$3,$4,$5); }
 	;
 
-label_part : 	{}
+label_part : 	
+    { 
+        //TODO 
+        $$ = new label_part();
+    }
 	;
 
 const_part :	CONST  const_expr_list
-	{} 
+	{ $$ = new const_part($2); } 
 	|
-	{}
+	{ $$ = new const_part(NULL); }
 	;
 
 const_expr_list :	const_expr_list  ID  EQUAL  const_value  SEMI
-	{}
+    {
+        const_expr_list *temp = $1;
+        while(temp->next != NULL)
+            temp = temp->next;
+        temp->next  = new const_expr_list(new identifier($2),$4,NULL);
+        $$ = $1;
+    }
 	|	ID  EQUAL  const_value  SEMI
-    {}
+    { $$ = new const_expr_list(new identifier($1),$3,NULL); }
 	;
 
 const_value :	INTEGER
-	{}
+	{ $$ = new const_value($1); }
 	|	REAL
-	{}
+	{ $$ = new const_value($1); }
 	|	CHAR
-	{}
+	{ $$ = new const_value($1); }
 	|	STRING
-	{}
+	{ $$ = new const_value($1); }
 	|	SYS_CON
-	{}
+	{
+        if($1 == SYS_CON_TRUE)
+            $$ = new const_value(_TRUE);
+        else if($1 == SYS_CON_FALSE)
+            $$ = new const_value(_FALSE);
+        else if($1 == SYS_CON_MAXINT)
+            $$ = new const_value(_MAXINT);
+    }
 	;
 
 type_part : 	TYPE type_decl_list
-	{}
-	|{}
+	{ $$ = new type_part($2); }
+	|{ $$ = new type_part(NULL); }
 	;
 
 type_decl_list :	type_decl_list  type_definition
-	{}
+    {
+        type_decl_list *temp = $1;
+        while($1!=NULL)
+            temp = temp->next;
+        temp->next = $2;
+        $$ = $1;
+    }
 	|	type_definition
-	{}
+	{ $$ = (type_decl_list *)$1; }
 	;
 
 type_definition :	ID  EQUAL  type_decl  SEMI
-	{}
+	{ $$ = new type_definition($1, $3, NULL); }
 	;
 
 type_decl :		simple_type_decl
-	{}
+	{ $$ = new type_decl($1); }
 	|	array_type_decl
-	{}
+	{ $$ = new type_decl($1); }
 	|	record_type_decl
-	{}
+	{ $$ = new type_decl($1); }
 	;
 
 simple_type_decl :	SYS_TYPE
-	{}
+	{ $$ = new simple_type_decl($1); }
 	|	ID
 	{}  
 	|	LP  name_list  RP

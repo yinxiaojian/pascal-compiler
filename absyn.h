@@ -13,7 +13,7 @@
 using namespace std;
 
 extern int line_no;
-
+struct base;
 struct program;
 struct program_head;
 struct routine;
@@ -78,6 +78,10 @@ struct identifier;
 struct sys_funct;
 struct sys_proc;
 
+//abstract tree root
+//program *absTree;
+
+
 //definition
 
 //operator definition: priority low->high
@@ -135,38 +139,42 @@ enum sys_con
     _TRUE
 };
 
-struct sys_proc
+struct base
+{
+
+    virtual bool semanticCheck(int scope)
+    {
+        return true;
+    }
+    virtual string codeGen()
+    {
+        return "";
+    }
+};
+
+struct sys_proc:base
 {
     SYS_PROC child1;
     sys_proc(SYS_PROC token1):child1(token1) {}
 };
 
-struct sys_funct
+struct sys_funct:base
 {
     SYS_FUNCT child1;
     sys_funct(SYS_FUNCT token1):child1(token1) {}
 };
 
-struct identifier
+struct identifier:base
 {
     string name;
     int linenumber;
     int offset;
     int scope;
     
-    identifier *next;
-    //linked list
-    //name_list
-    
-    identifier(string &token1, identifier *_next)
-    {
-        name = token1;
-        next = _next;
-    }
-    
+    identifier(char* token1):name(token1){}
 };
 
-struct program
+struct program:base
 {
     program_head *child1;
     routine *child2;
@@ -177,13 +185,13 @@ struct program
     }
 };
 
-struct program_head
+struct program_head:base
 {
     identifier *child1;
     program_head(identifier *token1):child1(token1){}
 };
 
-struct routine
+struct routine:base
 {
     routine_head *child1;
     routine_body *child2;
@@ -194,7 +202,7 @@ struct routine
     }
 };
 
-struct sub_routine
+struct sub_routine:base
 {
     routine_head *child1;
     routine_body *child2;
@@ -205,7 +213,7 @@ struct sub_routine
     }
 };
 
-struct routine_head
+struct routine_head:base
 {
     label_part *child1;
     const_part *child2;
@@ -222,18 +230,18 @@ struct routine_head
     }
 };
 
-struct label_part
+struct label_part:base
 {
     //not support...
 };
 
-struct const_part
+struct const_part:base
 {
     const_expr_list *child1;
     const_part(const_expr_list *token1):child1(token1){}
 };
 
-struct const_expr
+struct const_expr:base
 {
     identifier *child1;
     const_value *child2;
@@ -249,7 +257,7 @@ struct const_expr
     }
 };
 
-struct const_value
+struct const_value:base
 {
     int select;
     union
@@ -268,13 +276,13 @@ struct const_value
     const_value(sys_con token1):select(5){child1.pattern5 = token1;}
 };
 
-struct type_part
+struct type_part:base
 {
     type_decl_list *child1;
     type_part(type_decl_list *token1):child1(token1){}
 };
 
-struct type_definition
+struct type_definition:base
 {
     identifier *child1;
     type_decl *child2;
@@ -289,7 +297,7 @@ struct type_definition
     }
 };
 
-struct type_decl
+struct type_decl:base
 {
     int select;
     union
@@ -303,7 +311,7 @@ struct type_decl
     type_decl(record_type_decl *token1):select(3){child1.pattern3 = token1;}
 };
 
-struct simple_type_decl
+struct simple_type_decl:base
 {
     int select;
     union
@@ -353,7 +361,7 @@ struct simple_type_decl
     }
 };
 
-struct array_type_decl
+struct array_type_decl:base
 {
     simple_type_decl *child1;
     type_decl *child2;
@@ -365,13 +373,13 @@ struct array_type_decl
 };
 
 //TODO replace with record_type_decl
-struct record_type_decl
+struct record_type_decl:base
 {
     field_decl_list *child1;
     record_type_decl(field_decl_list *token1):child1(token1){}
 };
 
-struct field_decl
+struct field_decl:base
 {
     name_list *child1;
     type_decl *child2;
@@ -385,7 +393,7 @@ struct field_decl
 };
 //name_list
 
-struct name_list
+struct name_list:base
 {
     identifier *child1;
     name_list *next;
@@ -396,13 +404,13 @@ struct name_list
     }
 };
 
-struct var_part
+struct var_part:base
 {
     var_decl_list *child1;
     var_part(var_decl_list *token1):child1(token1){}
 };
 
-struct var_decl
+struct var_decl:base
 {
     name_list *child1;
     type_decl *child2;
@@ -415,7 +423,7 @@ struct var_decl
     }
 };
 
-struct routine_part
+struct routine_part:base
 {
     function_decl_list *child1;
     procedure_decl *child2;
@@ -426,7 +434,7 @@ struct routine_part
     }
 };
 
-struct function_decl
+struct function_decl:base
 {
     function_head *child1;
     sub_routine *child2;
@@ -439,7 +447,7 @@ struct function_decl
     }
 };
 
-struct function_head
+struct function_head:base
 {
     identifier *child1;
     parameters *child2;
@@ -452,7 +460,7 @@ struct function_head
     }
 };
 
-struct procedure_decl
+struct procedure_decl:base
 {
     procedure_head *child1;
     sub_routine *child2;
@@ -466,7 +474,7 @@ struct procedure_decl
     }
 };
 
-struct procedure_head
+struct procedure_head:base
 {
     identifier *child1;
     parameters *child2;
@@ -477,13 +485,13 @@ struct procedure_head
     }
 };
 
-struct parameters
+struct parameters:base
 {
     para_decl_list *child1;
     parameters(para_type_list *token1):child1(token1){}
 };
 
-struct para_type_list
+struct para_type_list:base
 {
     union
     {
@@ -516,20 +524,20 @@ struct para_type_list
     }
 };
 
-struct routine_body
+struct routine_body:base
 {
     compound_stmt *child1;
     routine_body(compound_stmt *token1):child1(token1){}
 };
 
-struct compound_stmt
+struct compound_stmt:base
 {
     // TODO:waitting for check
     stmt_list *child1;
     compound_stmt(stmt_list *token1):child1(token1){}
 };
 
-struct stmt
+struct stmt:base
 {
     int select;
     int child1;
@@ -554,7 +562,7 @@ struct stmt
     }
 };
 
-struct non_label_stmt
+struct non_label_stmt:base
 {
     int select;
     union
@@ -581,7 +589,7 @@ struct non_label_stmt
     non_label_stmt(goto_stmt *token1):select(9){ child1.pattern9 = token1; }
 };
 
-struct assign_stmt
+struct assign_stmt:base
 {
     int select;
     union
@@ -631,7 +639,7 @@ struct assign_stmt
     }
 };
 
-struct proc_stmt
+struct proc_stmt:base
 {
     int select;
     union
@@ -684,7 +692,7 @@ struct proc_stmt
     }
 };
 
-struct if_stmt
+struct if_stmt:base
 {
     expression *child1;
     stmt *child2;
@@ -697,7 +705,7 @@ struct if_stmt
     }
 };
 
-struct else_clause
+struct else_clause:base
 {
     int select;
     stmt_list *child1;
@@ -705,7 +713,7 @@ struct else_clause
     else_clause(){ select = 2; }
 };
 
-struct repeat_stmt
+struct repeat_stmt:base
 {
     stmt_list *child1;
     expression *child2;
@@ -716,7 +724,7 @@ struct repeat_stmt
     }
 };
 
-struct while_stmt
+struct while_stmt:base
 {
     expression *child1;
     stmt *child2;
@@ -727,7 +735,7 @@ struct while_stmt
     }
 };
 
-struct for_stmt
+struct for_stmt:base
 {
     identifier *child1;
     expression *child2;
@@ -745,7 +753,7 @@ struct for_stmt
     }
 };
 
-struct case_stmt
+struct case_stmt:base
 {
     expression *child1;
     case_expr_list *child2;
@@ -756,7 +764,7 @@ struct case_stmt
     }
 };
 
-struct case_expr
+struct case_expr:base
 {
     int select;
     union
@@ -786,13 +794,13 @@ struct case_expr
     }
 };
 
-struct goto_stmt
+struct goto_stmt:base
 {
     int child1;//goto: integer 
     goto_stmt(int token1):child1(token1){};
 };
 
-struct expression
+struct expression:base
 {
     expression *child1;
     operation child2;
@@ -819,7 +827,7 @@ struct expression
     }
 };
 
-struct expr
+struct expr:base
 {
     expr *child1;
     operation child2;
@@ -839,7 +847,7 @@ struct expr
     }
 };
 
-struct term 
+struct term:base
 {
     term *child1;
     operation child2;
@@ -860,7 +868,7 @@ struct term
     }
 };
 
-struct factor
+struct factor:base
 {
     int select;
     union

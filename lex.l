@@ -69,7 +69,6 @@ NQUOTE [^']
 {R}{E}{A}{D} return READ;
 {R}{E}{C}{O}{R}{D} return RECORD;
 {R}{E}{P}{E}{A}{T} return REPEAT;
-{S}{T}{R}{I}{N}{G} return STRING;
 {T}{H}{E}{N} return THEN;
 {T}{O} return TO;
 {T}{Y}{P}{E} return TYPE;
@@ -98,7 +97,7 @@ NQUOTE [^']
 {C}{H}{A}{R} {yylval.sysType = SYS_TYPE_CHAR;return SYS_TYPE;}
 {I}{N}{T}{E}{G}{E}{R} {yylval.sysType = SYS_TYPE_INTEGER;return SYS_TYPE;}
 {R}{E}{A}{L} {yylval.sysType = SYS_TYPE_REAL;return SYS_TYPE;}
-
+{S}{T}{R}{I}{N}{G} {yylval.sysType = SYS_TYPE_STRING;return SYS_TYPE;}
 [a-zA-Z]([a-zA-Z0-9_])* {
     yylval.sValue = (char*)malloc(strlen(yytext)+1);
     strcpy(yylval.sValue,yytext); 

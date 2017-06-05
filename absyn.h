@@ -108,6 +108,7 @@ enum operation
 
 enum sys_type
 {
+    _BOOLEAN,
     _CHAR,
     _INTEGER,
     _REAL,
@@ -504,7 +505,7 @@ struct para_type_list:base
         struct
         {
             val_para_list *child1;
-            para_type_list *child2;
+            simple_type_decl *child2;
         } pattern2;
     } child1;
     para_type_list *next;
@@ -516,7 +517,7 @@ struct para_type_list:base
         next = _next;
     }
 
-    para_type_list(var_para_list *token1, para_type_list *token2, para_type_list *_next)
+    para_type_list(var_para_list *token1, simple_type_decl *token2, para_type_list *_next, int i)
     {
         child1.pattern2.child1 = token1;
         child1.pattern2.child2 = token2;

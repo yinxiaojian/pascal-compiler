@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 #include "absyn.h"
 #include "yacc.tab.h"
 int line_no = 1;
@@ -47,108 +47,108 @@ NQUOTE [^']
 
 %%
 
-{A}{N}{D} return AND;
-{A}{R}{R}{A}{Y} return ARRAY;
-{B}{E}{G}{I}{N} return PBEGIN;
-{C}{A}{S}{E} return CASE;
-{C}{O}{N}{S}{T} return CONST;
-{D}{O} return DO;
-{D}{O}{W}{N}{T}{O} return DOWNTO;
-{E}{L}{S}{E} return ELSE;
-{E}{N}{D} return END;
-{F}{O}{R} return FOR;
-{F}{U}{N}{C}{T}{I}{O}{N} return FUNCTION;
-{G}{O}{T}{O} return GOTO;
-{I}{F} return IF;
-{M}{O}{D} return MOD;
-{N}{O}{T} return NOT;
-{O}{F} return OF;
-{O}{R} return OR;
-{P}{R}{O}{C}{E}{D}{U}{R}{E} return PROCEDURE;
-{P}{R}{O}{G}{R}{A}{M} return PROGRAM;
-{R}{E}{A}{D} return READ;
-{R}{E}{C}{O}{R}{D} return RECORD;
-{R}{E}{P}{E}{A}{T} return REPEAT;
-{T}{H}{E}{N} return THEN;
-{T}{O} return TO;
-{T}{Y}{P}{E} return TYPE;
-{U}{N}{T}{I}{L} return UNTIL;
-{V}{A}{R} return VAR;
-{W}{H}{I}{L}{E} return WHILE;
 
-{F}{A}{L}{S}{E} {yylval.sysCon = SYS_CON_FALSE;return SYS_CON;}
-{T}{R}{U}{E} {yylval.sysCon = SYS_CON_TRUE;return SYS_CON;}
-{M}{A}{X}{I}{N}{T} {yylval.sysCon = SYS_CON_MAXINT;return SYS_CON;}
+{A}{N}{D} return T_AND;
+{A}{R}{R}{A}{Y} return T_ARRAY;
+{B}{E}{G}{I}{N} return T_BEGIN;
+{C}{A}{S}{E} return T_CASE;
+{C}{O}{N}{S}{T} return T_CONST;
+{D}{O} return T_DO;
+{D}{O}{W}{N}{T}{O} return T_DOWNTO;
+{E}{L}{S}{E} return T_ELSE;
+{E}{N}{D} return T_END;
+{F}{O}{R} return T_FOR;
+{F}{U}{N}{C}{T}{I}{O}{N} return T_FUNCTION;
+{G}{O}{T}{O} return T_GOTO;
+{I}{F} return T_IF;
+{M}{O}{D} return T_MOD;
+{N}{O}{T} return T_NOT;
+{O}{F} return T_OF;
+{O}{R} return T_OR;
+{P}{R}{O}{C}{E}{D}{U}{R}{E} return T_PROCEDURE;
+{P}{R}{O}{G}{R}{A}{M} return T_PROGRAM;
+{R}{E}{A}{D} return T_READ;
+{R}{E}{C}{O}{R}{D} return T_RECORD;
+{R}{E}{P}{E}{A}{T} return T_REPEAT;
+{T}{H}{E}{N} return T_THEN;
+{T}{O} return T_TO;
+{T}{Y}{P}{E} return T_TYPE;
+{U}{N}{T}{I}{L} return T_UNTIL;
+{V}{A}{R} return T_VAR;
+{W}{H}{I}{L}{E} return T_WHILE;
 
-{A}{B}{S} {yylval.sysFunc=SYS_FUNCT_ABS;return SYS_FUNCT;}
-{C}{H}{R} {yylval.sysFunc=SYS_FUNCT_CHR;return SYS_FUNCT;}
-{O}{D}{D} {yylval.sysFunc=SYS_FUNCT_ODD;return SYS_FUNCT;}
-{O}{R}{D} {yylval.sysFunc=SYS_FUNCT_ORD;return SYS_FUNCT;}
-{P}{R}{E}{D} {yylval.sysFunc=SYS_FUNCT_PRED;return SYS_FUNCT;}
-{S}{Q}{R} {yylval.sysFunc=SYS_FUNCT_SQR;return SYS_FUNCT;}
-{S}{Q}{R}{T} {yylval.sysFunc=SYS_FUNCT_SQRT;return SYS_FUNCT;}
-{S}{U}{C}{C} {yylval.sysFunc=SYS_FUNCT_SUCC;return SYS_FUNCT;}
+{T}{R}{U}{E} return T_TRUE;
+{F}{A}{L}{S}{E} return T_FALSE;
+{M}{A}{X}{I}{N}{T} return T_MAXINT;
 
-{W}{R}{I}{T}{E} {yylval.sysProc=SYS_PROC_WRITE;return SYS_PROC;}
-{W}{R}{I}{T}{E}{L}{N} {yylval.sysProc=SYS_PROC_WRITELN;return SYS_PROC;}
+{A}{B}{S} return T_ABS;
+{C}{H}{R} return T_CHR;
+{O}{D}{D} return T_ODD;
+{O}{R}{D} return T_ORD;
+{P}{R}{E}{D} return T_PRED;
+{S}{Q}{R} return T_SQR;
+{S}{Q}{R}{T} return T_SQRT;
+{S}{U}{C}{C} return T_SUCC;
 
+{W}{R}{I}{T}{E} return T_WRITE;
+{W}{R}{I}{T}{E}{L}{N} return T_WRITELN;
 
-{B}{O}{O}{L}{E}{A}{N} {yylval.sysType = SYS_TYPE_BOOL;return SYS_TYPE;}
-{C}{H}{A}{R} {yylval.sysType = SYS_TYPE_CHAR;return SYS_TYPE;}
-{I}{N}{T}{E}{G}{E}{R} {yylval.sysType = SYS_TYPE_INTEGER;return SYS_TYPE;}
-{R}{E}{A}{L} {yylval.sysType = SYS_TYPE_REAL;return SYS_TYPE;}
-{S}{T}{R}{I}{N}{G} {yylval.sysType = SYS_TYPE_STRING;return SYS_TYPE;}
+{I}{N}{T}{E}{G}{E}{R} return T_INTEGER_TYPE;
+{R}{E}{A}{L} return T_REAL_TYPE;
+{C}{H}{A}{R} return T_CHAR_TYPE;
+{S}{T}{R}{I}{N}{G} return T_STRING_TYPE;
+{B}{O}{O}{L}{E}{A}{N} return T_BOOLEAN_TYPE;
+
 [a-zA-Z]([a-zA-Z0-9_])* {
-    yylval.sValue = (char*)malloc(strlen(yytext)+1);
-    strcpy(yylval.sValue,yytext); 
-    return ID;
+	yylval.sval = (char*)malloc(strlen(yytext)+1);
+	strcpy(yylval.sval,yytext); 
+    return T_ID;
 }
 
 
 '({NQUOTE}|'')({NQUOTE}|'')+' {
-    char *p=(char*)malloc(strlen(yytext)+1);
-    strcpy(p,yytext);
-    yylval.sValue=p;
-    return STRING;
+    yylval.sval = yytext;
+    return T_STRING;
 }
 
 '({NQUOTE}|'')' {
-    yylval.cValue=yytext[1];
-    return CHAR;
+    yylval.sval = yytext;
+    return T_CHAR;
 }
 
 [0-9]+ {
-    yylval.iValue=atoi(yytext);
-    return INTEGER;
+    yylval.ival = atoi(yytext);
+    return T_INT;
 }
 
 [0-9]+"\."[0-9]+ {
-    yylval.rValue=atof(yytext);
-    return REAL;
+    yylval.dval = atof(yytext);
+    return T_REAL;
 }
 
 
-":=" return ASSIGN;
-":" return COLON;
-"," return COMMA;
-"." return DOT;
-".." return DOTDOT;
-"=" return EQUAL;
-">=" return GE;
-">" return GT;
-"[" return LB;
-"<=" return LE;
-"(" return LP;
-"<" return LT;
-"-" return MINUS;
-"<>" return UNEQUAL;
-"+" return PLUS;
-"]" return RB;
+":=" return T_ASSIGN;
+":" return T_COLON;
+"," return T_COMMA;
+"." return T_DOT;
+".." return T_DOTDOT;
+"=" return T_EQUAL;
+">=" return T_GE;
+">" return T_GT;
+"[" return T_LB;
+"<=" return T_LE;
+"(" return T_LP;
+"<" return T_LT;
+"-" return T_MINUS;
+"<>" return T_UNEQUAL;
+"+" return T_PLUS;
+"]" return T_RB;
 
-")" return RP;
-";" return SEMI;
-"/" return DIV;
-"*" return MUL;
+")" return T_RP;
+";" return T_SEMI;
+"/" return T_DIV;
+"*" return T_MUL;
+"%" return T_MOD;
 
 "{" {
     register int c;

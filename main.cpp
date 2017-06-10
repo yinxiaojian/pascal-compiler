@@ -8,10 +8,12 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "absyn.h"
 using namespace std;
 extern int yyparse(void);
 extern FILE* yyin;
+TreeNode savedTree;
+vector<string> errMsg;
 int main()
 {
     FILE *fp = fopen("test.spl", "r");
@@ -25,5 +27,6 @@ int main()
     yyparse();
     fclose(fp);
     cout<<"compile end"<<endl;
+	savedTree->printTree(savedTree,0);
     return 0;
 }

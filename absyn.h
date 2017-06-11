@@ -11,7 +11,10 @@
 #include <string>
 #include <vector>
 #include <bitset>
+#include "list"
 #include "typemap.h"
+
+
 using namespace std;
 
 /*1-10*/
@@ -110,6 +113,10 @@ enum TypeKind {
 };
 
 typedef class TreeDefine *TreeNode;
+/* define in symboldefine.h*/
+class RecordDefinition;
+class SubBoundDefinition;
+class ArrayDefinition;
 
 struct Object
 {
@@ -117,6 +124,11 @@ struct Object
 	int _int;
 	double _double;
 	string _string;
+
+	RecordDefinition* rd;//5 enum
+	list<struct Object> lo;//6 record
+	SubBoundDefinition* sd;//7 array index
+	ArrayDefinition* ad;//8 array
 };
 
 class TreeDefine

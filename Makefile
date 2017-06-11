@@ -3,12 +3,15 @@ YACC=bison
 CC=g++ -std=c++11
 OBJECT=main
 
-$(OBJECT): lex.yy.o yacc.tab.o absyn.o main.o
-	$(CC) lex.yy.o yacc.tab.o absyn.o main.o -o $(OBJECT)
+$(OBJECT): lex.yy.o yacc.tab.o absyn.o symboltable.o main.o
+	$(CC) lex.yy.o yacc.tab.o absyn.o symboltable.o main.o -o $(OBJECT)
 	@./$(OBJECT)	#run after compile
 
 main.o : main.cpp 
 	$(CC) -c main.cpp
+
+symboltable.o : symboltable.cpp
+	$(CC) -c symboltable.cpp
 
 absyn.o : absyn.cpp
 	$(CC) -c absyn.cpp

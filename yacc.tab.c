@@ -1573,7 +1573,7 @@ yyreduce:
     {   (yyval.node) = (yyvsp[0].node);
                             (yyval.node)->setAttribute((yyvsp[-2].sval));
                             savedTree = (yyval.node);
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of end dot");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of end dot");
                         }
 #line 1579 "yacc.tab.c" /* yacc.c:1646  */
     break;
@@ -1583,7 +1583,7 @@ yyreduce:
     {   (yyval.node) = (yyvsp[-1].node);
                             (yyval.node)->setAttribute((yyvsp[-2].sval));
                             savedTree = (yyval.node);
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
 #line 1589 "yacc.tab.c" /* yacc.c:1646  */
     break;
@@ -1593,7 +1593,7 @@ yyreduce:
     {   (yyval.node) = (yyvsp[0].node);
                             (yyval.node)->setAttribute((yyvsp[-1].sval));
                             savedTree = (yyval.node);
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon and end dot");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon and end dot");
                         }
 #line 1599 "yacc.tab.c" /* yacc.c:1646  */
     break;
@@ -1683,7 +1683,7 @@ yyreduce:
                             (yyval.node)=new TreeDefine(FUNCTION,line_no);
                             (yyval.node)->addChild((yyvsp[-2].node));
                             (yyval.node)->addChild((yyvsp[0].node));
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
 #line 1689 "yacc.tab.c" /* yacc.c:1646  */
     break;
@@ -1694,7 +1694,7 @@ yyreduce:
                             (yyval.node)=new TreeDefine(FUNCTION,line_no);
                             (yyval.node)->addChild((yyvsp[-2].node));
                             (yyval.node)->addChild((yyvsp[-1].node));
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
 #line 1700 "yacc.tab.c" /* yacc.c:1646  */
     break;
@@ -1705,7 +1705,7 @@ yyreduce:
                             (yyval.node)=new TreeDefine(FUNCTION,line_no);
                             (yyval.node)->addChild((yyvsp[-1].node));
                             (yyval.node)->addChild((yyvsp[0].node));
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
 #line 1711 "yacc.tab.c" /* yacc.c:1646  */
     break;
@@ -1841,7 +1841,7 @@ yyreduce:
     {   (yyval.node)=new TreeDefine(VAR,line_no);
                             (yyval.node)->addChild((yyvsp[-2].node));
                             (yyval.node)->addChild((yyvsp[0].node));
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
 #line 1847 "yacc.tab.c" /* yacc.c:1646  */
     break;
@@ -1898,7 +1898,7 @@ yyreduce:
                             (yyval.node)->setAttribute((yyvsp[-2].node)->getAttribute());
                             (yyval.node)->addChild((yyvsp[0].node));
                             (yyval.node)->setExpType((yyvsp[0].node)->getExpType());
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
 #line 1904 "yacc.tab.c" /* yacc.c:1646  */
     break;
@@ -2021,7 +2021,7 @@ yyreduce:
     {   (yyval.node)=new TreeDefine(TYPE,line_no);
                             (yyval.node)->addChild((yyvsp[-2].node));
                             (yyval.node)->addChild((yyvsp[0].node));
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
 #line 2027 "yacc.tab.c" /* yacc.c:1646  */
     break;
@@ -2088,7 +2088,7 @@ yyreduce:
                             (yyval.node)=new TreeDefine(TK_RECORD,line_no);
                             (yyval.node)->addChild((yyvsp[-2].node));
                             (yyval.node)->addChild((yyvsp[0].node));
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
 #line 2094 "yacc.tab.c" /* yacc.c:1646  */
     break;
@@ -2244,7 +2244,7 @@ yyreduce:
 
   case 75:
 #line 460 "yacc.y" /* yacc.c:1646  */
-    {(yyval.node)=(yyvsp[0].node); errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of end");}
+    {(yyval.node)=(yyvsp[0].node); errMsg.push_back("error at line " + to_string(line_no) + ", lack of end");}
 #line 2249 "yacc.tab.c" /* yacc.c:1646  */
     break;
 
@@ -2282,7 +2282,7 @@ yyreduce:
                             }
                             else
                                 (yyval.node)=(yyvsp[0].node);
-                           errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                           errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
 #line 2288 "yacc.tab.c" /* yacc.c:1646  */
     break;
@@ -2413,7 +2413,7 @@ yyreduce:
                             (yyval.node)->addChild((yyvsp[-2].node));
                             (yyval.node)->addChild((yyvsp[-1].node));
                             (yyval.node)->addChild((yyvsp[0].node));
-                             errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of then");
+                             errMsg.push_back("error at line " + to_string(line_no) + ", lack of then");
                         }
 #line 2419 "yacc.tab.c" /* yacc.c:1646  */
     break;

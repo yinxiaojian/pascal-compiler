@@ -58,19 +58,19 @@ program             :   T_PROGRAM T_ID T_SEMI routine T_DOT
                         {   $$ = $4;
                             $$->setAttribute($2);
                             savedTree = $$;
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of end dot");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of end dot");
                         }
                     | 	T_PROGRAM T_ID routine T_DOT
                         {   $$ = $3;
                             $$->setAttribute($2);
                             savedTree = $$;
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
                     | 	T_PROGRAM T_ID routine
                     	{   $$ = $3;
                             $$->setAttribute($2);
                             savedTree = $$;
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon and end dot");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon and end dot");
                         }
                     ;
 routine             :   routine_head routine_body
@@ -124,21 +124,21 @@ function_decl       :   function_head T_SEMI routine T_SEMI
                             $$=new TreeDefine(FUNCTION,line_no);
                             $$->addChild($1);
                             $$->addChild($3);
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
                     |	function_head routine T_SEMI
                         {
                             $$=new TreeDefine(FUNCTION,line_no);
                             $$->addChild($1);
                             $$->addChild($2);
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
                     |	function_head routine
                         {
                             $$=new TreeDefine(FUNCTION,line_no);
                             $$->addChild($1);
                             $$->addChild($2);
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
                     ;
 function_head       :   T_FUNCTION T_ID parameters  T_COLON simple_type_decl
@@ -222,7 +222,7 @@ var_decl            :   name_list T_COLON type_decl T_SEMI
                         {   $$=new TreeDefine(VAR,line_no);
                             $$->addChild($1);
                             $$->addChild($3);
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
                     ;
 const_part          :
@@ -259,7 +259,7 @@ const_expr          :    ID T_EQUAL const_value T_SEMI
                             $$->setAttribute($1->getAttribute());
                             $$->addChild($3);
                             $$->setExpType($3->getExpType());
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
                     ;
 const_value         :   T_INT
@@ -334,7 +334,7 @@ type_definition     :   ID T_EQUAL type_decl T_SEMI
                         {   $$=new TreeDefine(TYPE,line_no);
                             $$->addChild($1);
                             $$->addChild($3);
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
                     ;
 type_decl           :   simple_type_decl    {$$=$1;}
@@ -369,7 +369,7 @@ field_decl          :   name_list T_COLON type_decl T_SEMI
                             $$=new TreeDefine(TK_RECORD,line_no);
                             $$->addChild($1);
                             $$->addChild($3);
-                            errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                            errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
                     ;
 array_type_decl     :   T_ARRAY T_LB simple_type_decl T_RB T_OF type_decl
@@ -457,7 +457,7 @@ ID                  :   T_ID
                         } ;
 routine_body        :   compound_stmt   {$$=$1;} ;
 compound_stmt       :   T_BEGIN stmt_list T_END {$$=$2;} 
-					|	T_BEGIN stmt_list {$$=$2; errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of end");} ;
+					|	T_BEGIN stmt_list {$$=$2; errMsg.push_back("error at line " + to_string(line_no) + ", lack of end");} ;
 stmt_list           :
                         {$$=NULL;}
                     |   stmt_list stmt T_SEMI
@@ -483,7 +483,7 @@ stmt_list           :
                             }
                             else
                                 $$=$2;
-                           errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of semicolon");
+                           errMsg.push_back("error at line " + to_string(line_no) + ", lack of semicolon");
                         }
                     ;
 stmt                :   T_INT T_COLON no_label_stmt
@@ -542,7 +542,7 @@ if_stmt             :   T_IF expression T_THEN stmt  else_clause
                             $$->addChild($2);
                             $$->addChild($3);
                             $$->addChild($4);
-                             errMsg.push_back("Error : error at line " + to_string(line_no) + ", lack of then");
+                             errMsg.push_back("error at line " + to_string(line_no) + ", lack of then");
                         }
                     ;
 else_clause         :   {$$=NULL;}

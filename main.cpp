@@ -11,63 +11,30 @@
 #include "absyn.h"
 #include "symboltable.h"
 #include "codegen.h"
+#include "colorconsole.h"
 using namespace std;
 extern int yyparse(void);
 extern FILE* yyin;
 TreeNode savedTree;
 vector<string> errMsg;
-CodeGenerator* instance = NULL;
-StmtAssignGenerator* stmtAssignGenerator;
-StmtIfGenerator* stmtIfGenerator;
-StmtForGenerator* stmtForGenerator;
-StmtWhileGenerator* stmtWhileGenerator;
-StmtRepeatGenerator* stmtRepeatGenerator;
-StmtCaseGenerator* stmtCaseGenerator;
-StmtGotoGenerator* stmtGotoGenerator;
-StmtLabelGenerator* stmtLabelGenerator;
-StmtProcIdGenerator* stmtProcIdGenerator;
-StmtProcSysGenerator* stmtProcSysGenerator;
-StmtFuncAndProcGenerator* stmtFuncAndProcGenerator;
-ExpIdGenerator* expIdGenerator;
-ExpOpGenerator* expOpGenerator;
-ExpConstGenerator* expConstGenerator;
-ExpCaseGenerator* expCaseGenerator;
-ExpFuncIdGenerator* expFuncIdGenerator;
-FuncDeclGenerator* funcDeclGenerator;
-ProcDeclGenerator* procDeclGenerator;
-RoutineHeadGenerator* routineHeadGenerator;
-void init(){
 
-	instance = new CodeGenerator();
-	stmtAssignGenerator = new StmtAssignGenerator(instance);
-	stmtIfGenerator = new StmtIfGenerator(instance);
-	stmtForGenerator = new StmtForGenerator(instance);
-	stmtWhileGenerator = new StmtWhileGenerator(instance);
-	stmtRepeatGenerator = new StmtRepeatGenerator(instance);
-	stmtCaseGenerator = new StmtCaseGenerator(instance);
-	stmtGotoGenerator = new StmtGotoGenerator(instance);
-	stmtLabelGenerator = new StmtLabelGenerator(instance);
-	stmtProcIdGenerator = new StmtProcIdGenerator(instance);
-	stmtProcSysGenerator = new StmtProcSysGenerator(instance);
-	stmtFuncAndProcGenerator = new StmtFuncAndProcGenerator(instance);
-	expIdGenerator = new ExpIdGenerator(instance);
-	expOpGenerator = new ExpOpGenerator(instance);
-	expConstGenerator = new ExpConstGenerator(instance);
-	expCaseGenerator = new ExpCaseGenerator(instance);
-	expFuncIdGenerator = new ExpFuncIdGenerator(instance);
-	funcDeclGenerator = new FuncDeclGenerator(instance);
-	procDeclGenerator = new ProcDeclGenerator(instance);
-	routineHeadGenerator = new RoutineHeadGenerator(instance);
-}
+Color::Modifier red(Color::FG_RED);
+Color::Modifier def(Color::FG_DEFAULT);
 
-
-int main()
+int main(int argc, char **argv)
 {
-    FILE *fp = fopen("test.spl", "r");
+    if(argc != 3)
+    {
+        cout<<"please input like : ./main x.spl y.asm"<<endl;
+        exit(1);
+    }
+    char* input = argv[1];
+    string output = argv[2];
+    FILE *fp = fopen(input, "r");
     if(fp == NULL)
     {
-        cout<<"can not open file"<<endl;
-        return -1;
+        cout<<"can not open file "<<input<<endl;
+        exit(1);
     }
     yyin = fp;
     cout<<"compile begin"<<endl;
@@ -76,13 +43,16 @@ int main()
     cout<<"compile end"<<endl;
 	if(errMsg.size()==0)
 	{
+        cout<<"===========a=b=s=t=r=c=t===t=r=e=e============="<<endl;
 		savedTree->printTree(savedTree,0);
-		if (instance == NULL)
-			init();
-		instance->generate(savedTree, "out.asm");
-	}	
+		CodeGenerator *instance = CodeGenerator::getinstance();
+		CodeGenerator::init(instance);
+		instance->generate(savedTree,output);
+        cout<<"==============================================="<<endl;
+        cout<<"generate code finish"<<endl;
+	}
 	else
 		for(int i = 0; i < errMsg.size(); i++)
-			cout<<errMsg.at(i)<<endl;
+            cout<<red<<"Error: "<<def<<errMsg.at(i)<<endl;
     return 0;
 }
